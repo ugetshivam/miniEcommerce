@@ -1,21 +1,33 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
-import './Navbar.css'
-import NavItems from './NavItems'
+import navStyles from "./Navbar.module.css"
+import navItems from "./NavItems"
+import CartButton from "../cart/CartButton"
+import { Link } from "react-router-dom"
 const Navbar = () => {
+
   return (
-    <nav className="nav">
-        <div className="title-container">
-          <span className="title">eKart</span>  
+    <header className={`${navStyles.header} container ${navStyles.light}`}>
+      <nav className={`${navStyles.navbar} container flex`}>
+        <div className={`${navStyles.title_container} flex`}>
+          <span className={navStyles.title}>
+            eKart
+          </span>
         </div>
-        <ul className='navbar-nav'>
-            {
-              NavItems.map(({id, name, link})=>{
-                return <li key={id} className="navbar-items"><NavLink to={link}>{name}</NavLink></li>
-              })
-            }
+        <ul className={`${navStyles.nav} flex`}>
+          {navItems.map(({ _id, name, link }) => (
+            <li className={navStyles.nav_items} key={_id}>
+              <a href={link}>
+                <span>{name}</span>
+              </a>
+            </li>
+          ))}
         </ul>
-    </nav>
+        <div className={`${navStyles.title_container} flex`}>
+          <Link to='/cart'>
+            <CartButton />
+          </Link>
+        </div>
+      </nav>
+    </header>
   )
 }
 

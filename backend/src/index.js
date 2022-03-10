@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const productRoute = require('./routes/productRoutes')
 const seedDB = require('../seed');
-
+const cors = require('cors');
 mongoose.connect('mongodb://localhost:27017/MEcom')
         .then(()=>{
             console.log("DB Connected");
@@ -13,6 +13,14 @@ mongoose.connect('mongodb://localhost:27017/MEcom')
         });
 
 // seedDB(); // PUTTING DUMMY DATA INTO THE PRODUCT COLLECTION
+
+app.use(cors(
+    {
+        methods: ['GET', 'POST'],
+        origin: ['http://localhost:3000'],
+        credentials:true
+    },
+))
 
 app.use(express.json());
 app.use(productRoute);
