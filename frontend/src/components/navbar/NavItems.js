@@ -1,21 +1,21 @@
 const navItems = [
     {
-        id: 1,
+        _id: 1,
         name: "Create",
         link: "/create"
     },
+    // {
+    //     _id: 2,
+    //     name: "Home",
+    //     link: "/home"
+    // },
     {
-        id: 2,
-        name: "Home",
-        link: "/home"
-    },
-    {
-        id: 3,
+        _id: 2,
         name: "About",
         link: "/about"
     },
     {
-        id: 4,
+        _id: 3,
         name: "Contact Us",
         link: "/contact"
     },

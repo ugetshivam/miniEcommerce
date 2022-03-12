@@ -41,7 +41,7 @@ const Cart = () => {
                     </li>
                 })
             }
-            <li>Total: {totalCartPrice} <span className={styles['place-order-btn']}><button onClick={placeOrderHandler}>Place Order</button></span> </li>
+            <li className='flex'><span>Total:{totalCartPrice}</span> <button onClick={placeOrderHandler} className='btn'>Place Order</button></li>
         </ul>
     )
 }

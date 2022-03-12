@@ -31,13 +31,15 @@ router.post('/products', async (req, res) => {
 
 router.put('/products/:id', async (req, res) => {
     try {
-        const { id } = req.query;
+        const id = req.params.id;
         const product = req.body;
         await Product.findByIdAndUpdate(id, {
             name: product.name,
             price: product.price,
             desc: product.desc,
             img: product.img
+        }, {
+            new: true
         });
         res.status(201).json({ msg: "Product updated" });
     } catch (err) {

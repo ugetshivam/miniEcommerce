@@ -2,11 +2,13 @@ import "./Create.css"
 import axios from 'axios'
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
-const Update = () => {
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState(0);
-    const [desc, setDesc] = useState("");
-    const [img, setImg] = useState("");
+const Update = (props) => {
+    const { uName, uPrice, uDesc, uImg, uId } = props.payload;
+    console.log(uId);
+    const [name, setName] = useState(uName);
+    const [price, setPrice] = useState(uPrice);
+    const [desc, setDesc] = useState(uDesc);
+    const [img, setImg] = useState(uImg);
 
     const navigate = useNavigate();
 
@@ -25,7 +27,7 @@ const Update = () => {
 
     const clickHandler = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:8080/products', {
+        await axios.put(`http://localhost:8080/products/${uId}`, {
             name: name,
             price: price,
             desc: desc,
@@ -37,7 +39,7 @@ const Update = () => {
                 console.log(err);
             });
 
-        navigate("/home");
+        navigate("/");
         window.location.reload();
     }
 
@@ -46,19 +48,19 @@ const Update = () => {
             <label htmlFor='name'>
                 Name:
             </label>
-            <input type="text" id='name' name='name' required onChange={nameChangeHandler} />
+            <input type="text" id='name' name='name' required onChange={nameChangeHandler} value={name} />
             <label htmlFor='price'>
                 Price:
             </label>
-            <input type="number" id='price' name='price' required onChange={priceChangeHandler} />
+            <input type="number" id='price' name='price' required onChange={priceChangeHandler} value={price} />
             <label htmlFor='desc'>
                 Description:
             </label>
-            <input type="text" id='desc' name='desc' required onChange={descChangeHandler} />
+            <input type="text" id='desc' name='desc' required onChange={descChangeHandler} value={desc} />
             <label htmlFor='img'>
                 Image Link:
             </label>
-            <input type="text" id='img' name='img' required onChange={imgChangeHandler} />
+            <input type="text" id='img' name='img' required onChange={imgChangeHandler} value={img} />
             <button type='submit' onClick={clickHandler} className='btn'>Submit</button>
         </form>
     )

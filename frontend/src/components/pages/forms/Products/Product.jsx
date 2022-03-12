@@ -1,11 +1,15 @@
 import cardStyles from "./Product.module.css"
 import CartContext from "../../../contexts/CartContext";
 import { useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 const Product = (props) => {
+    const navigate = useNavigate();
+    const { uproducts, updateProduct } = props.payload;
+    // console.log(props);
+
     const cartCtx = useContext(CartContext);
 
     const inputQtyRef = useRef();
-
 
     const addToCart = () => {
 
@@ -17,6 +21,18 @@ const Product = (props) => {
             qty: inputQtyRef.current.value
         })
 
+    }
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        updateProduct({
+            uId: props.id,
+            uName: props.name,
+            uPrice: props.price,
+            uDesc: props.desc,
+            uImg: props.img
+        })
+        navigate('/update');
     }
     return (
         <div className={`${cardStyles.card} flex`}>
@@ -36,8 +52,10 @@ const Product = (props) => {
                     defaultValue={1}
                     ref={inputQtyRef}
                 />
+            </p>
+            <p className="flex">
                 <button className="btn" onClick={addToCart}>Add</button>
-                <button className="btn" >Update</button>
+                <button className="btn" onClick={handleUpdate}>Update</button>
             </p>
 
         </div>

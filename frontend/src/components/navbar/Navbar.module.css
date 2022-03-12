@@ -1,5 +1,5 @@
 .header a {
-    color: var(--white);
+    color: var(--black-1);
     text-decoration: none;
 }
 
@@ -10,7 +10,7 @@
 .header {
     top: 0;
     background-color: var(--black-1);
-    --height: 50px;
+    --height: 60px;
     box-shadow: 0 0 3px 2px #000;
     margin: 0 0 2em 0;
     position: fixed;
@@ -34,11 +34,26 @@
 }
 
 .nav {
+    width: 100%;
     flex: 2;
-    --gap: 3em;
-    padding: 0 2em;
+    --gap: 2em;
     align-items: center;
     justify-content: flex-end;
+}
+
+.cart_div {
+    padding: 0 4px;
+    align-items: center;
+}
+
+.cart_div li a {
+    background: var(--blue-2);
+    padding: 1em 1em;
+    border-radius: .3em;
+}
+
+.cart_div li span {
+    color: var(--white);
 }
 
 .nav_items a {
@@ -65,4 +80,78 @@
 
 .header.light .nav_items a:hover {
     color: #000;
+}
+
+.mobile_div {
+    display: none;
+}
+
+@media screen and (max-width: 780px) {
+    .navbar {
+        position: relative;
+    }
+
+    .nav {
+        
+        transition: all 250ms ease-in-out 0s;
+        right: 0;
+        flex: 0;
+        top: 60px;
+        --gap: 8em;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        flex-direction: column;
+        justify-content: center;
+        background: transparent;
+        backdrop-filter: blur(1rem);
+        padding: 0;
+
+    }
+
+    .nav:focus-within {
+        backdrop-filter: 2rem;
+        background-color: rgba(100%, 100%, 100%, 0.8);
+    }
+
+    .nav li input[type='text'] {
+        width: 50vw;
+        text-align: center;
+    }
+
+    .nav * {
+        color: var(--blue-1);
+        font-size: 1.7rem;
+    }
+
+    .cart_div {
+        flex: 1;
+        align-items: center;
+        padding: 0 2em;
+        justify-content: flex-end;
+    }
+
+    .cart_div li a {
+        background: transparent;
+    }
+    .cart_div li span {
+        color: var(--black-2);
+    }
+
+    .mobile_div {
+        display: flex;
+    }
+
+    .mobile_btn {
+        background: transparent;
+        border: none;
+        color: var(--black-2);
+        font-size: 1.3rem;
+    }
+    .nav.true {
+        transform: translateX(0%);
+    }
+    .nav.false {
+        transform: translateX(100%);
+    }
 }
