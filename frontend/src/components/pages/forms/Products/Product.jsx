@@ -4,7 +4,7 @@ import { useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 const Product = (props) => {
     const navigate = useNavigate();
-    const { uproducts, updateProduct } = props.payload;
+    const { updateProduct } = props.payload;
     // console.log(props);
 
     const cartCtx = useContext(CartContext);

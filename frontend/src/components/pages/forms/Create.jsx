@@ -37,7 +37,7 @@ const Create = () => {
                 console.log(err);
             });
 
-        navigate("/home");
+        navigate("/");
         window.location.reload();
     }
 
