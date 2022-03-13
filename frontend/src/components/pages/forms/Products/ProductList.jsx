@@ -3,10 +3,9 @@ import Product from './Product'
 import styles from "./Product.module.css"
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import SearchContext from '../../../contexts/SearchContext'
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
 const ProductList = (props) => {
-    const searchCtx = useContext(SearchContext);
+    const searchField = useSelector((state) => state.search.searchField);
     const [products, setProducts] = useState([]);
     async function getProducts() {
         try {
@@ -21,11 +20,12 @@ const ProductList = (props) => {
         getProducts();
     }
         , [])
+    console.table(products);
     return (
         <div className={`${styles.container} flex container`}>
             {
                 products.map((product) => (
-                    product.name.toLowerCase().includes(searchCtx.searchField.toLowerCase()) ?
+                    product.name.toLowerCase().includes(searchField.toLowerCase()) ?
                         <Product
                             id={product._id}
                             key={product._id}

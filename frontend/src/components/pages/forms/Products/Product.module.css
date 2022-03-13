@@ -39,7 +39,10 @@
 .details {
     line-height: 1.5rem;
     max-width: 100%;
-    /* flex-wrap: wrap; */
+}
+
+.details input[type = "number"] {
+    padding: 2px;
 }
 
 

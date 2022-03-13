@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './Search.module.css'
-import SearchContext from '../contexts/SearchContext'
-import { useContext } from 'react'
+import { changeField } from '../../redux/searchSlice'
+import { useDispatch } from 'react-redux'
 const Search = () => {
-    const searchCtx = useContext(SearchContext);
+    const dispatch = useDispatch();
     return (
 
-        <input type="text" placeholder="Search for something" className={styles.inp} onChange={(e) => searchCtx.changeField(e.target.value)} />
+        <input type="text" placeholder="Search for something" className={styles.inp} onChange={(e) => dispatch(changeField(e.target.value))} />
 
     )
 }

@@ -3,17 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom'
-import { CartContextProvider } from './components/contexts/CartContext'
-import { SearchContextProvider } from './components/contexts/SearchContext'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 ReactDOM.render(
   <React.StrictMode>
-    <CartContextProvider>
-      <SearchContextProvider>
-        <Router>
-          <App />
-        </Router>
-      </SearchContextProvider>
-    </CartContextProvider>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

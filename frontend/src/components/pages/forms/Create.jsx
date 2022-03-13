@@ -1,7 +1,8 @@
-import "./Create.css"
+import styles from "./Create.module.css"
 import axios from 'axios'
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
+
 const Create = () => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
@@ -42,7 +43,7 @@ const Create = () => {
     }
 
     return (
-        <form className="create-form flex">
+        <form className={`${styles.form} flex`}>
             <label htmlFor='name'>
                 Name:
             </label>
@@ -51,14 +52,14 @@ const Create = () => {
                 Price:
             </label>
             <input type="number" id='price' name='price' required onChange={priceChangeHandler} />
-            <label htmlFor='desc'>
-                Description:
-            </label>
-            <input type="text" id='desc' name='desc' required onChange={descChangeHandler} />
             <label htmlFor='img'>
                 Image Link:
             </label>
             <input type="text" id='img' name='img' required onChange={imgChangeHandler} />
+            <label htmlFor='desc'>
+                Description:
+            </label>
+            <textarea id='desc' name='desc' required onChange={descChangeHandler} value={desc} />
             <button type='submit' onClick={clickHandler} className='btn'>Submit</button>
         </form>
     )

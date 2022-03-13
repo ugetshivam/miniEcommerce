@@ -1,0 +1,10 @@
+.form {
+    width: 30em;
+    height: 40em;
+    flex-direction: column;
+    margin: 80px auto;
+}
+
+.form input, .form textarea{
+    padding: 1em;
+}

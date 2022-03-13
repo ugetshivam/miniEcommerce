@@ -1,63 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../models/product');
+const { getProducts, createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
+
 
 // GET ALL THE PRODUCTS
 
-router.get('/products', async (req, res) => {
-    try {
-        const allProducts = await Product.find({});
-        res.status(200).json(allProducts);
-    } catch (err) {
-        res.status(500).json({ msg: "Cannot fetch products at the moment" });
-    }
-});
+router.get('/products', getProducts);
 
 //  CREATE A PRODUCT
 
-router.post('/products', async (req, res) => {
-    try {
-        const newProduct = req.body;
-        const addProduct = new Product(newProduct);
-        await addProduct.save(); // ADDS PRODUCT TO THE DATABASE
-        res.status(201).json({ msg: "Product added to the database" });
-    } catch (err) {
-        res.status(401).json({ msg: "Cannot create a product at the moment" });
-    }
-});
+router.post('/products', createProduct);
 
 
 // UPDATE A PRODUCT
 
-router.put('/products/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const product = req.body;
-        await Product.findByIdAndUpdate(id, {
-            name: product.name,
-            price: product.price,
-            desc: product.desc,
-            img: product.img
-        }, {
-            new: true
-        });
-        res.status(201).json({ msg: "Product updated" });
-    } catch (err) {
-        res.status(400).json({ msg: "SERVER ERROR" });
-    }
-});
+router.put('/products/:id', updateProduct);
 
 // DELETE A PRODUCT
 
-router.delete('/products/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        await Product.findByIdAndDelete(id);
-        res.status(201).json({ msg: "Product deleted" });
-    } catch (err) {
-        res.status(500).json({ msg: "SERVER ERROR" });
-    }
-})
+router.delete('/products/:id', deleteProduct)
 
 
 

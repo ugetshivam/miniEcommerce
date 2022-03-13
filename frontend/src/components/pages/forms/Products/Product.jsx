@@ -1,15 +1,29 @@
 import cardStyles from "./Product.module.css"
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { addItem } from "../../../../redux/cartSlice";
 const Product = (props) => {
     const navigate = useNavigate();
     const { updateProduct } = props.payload;
     // console.log(props);
+    const dispatch = useDispatch();
 
     const inputQtyRef = useRef();
 
-    const addToCart = () => {
 
+
+
+    const addToCart = (e) => {
+        e.preventDefault();
+        const item = {
+            id: props.id,
+            name: props.name,
+            desc: props.desc,
+            price: props.price,
+            qty: inputQtyRef.current.value
+        };
+        dispatch(addItem(item));
     }
 
     const handleUpdate = (e) => {

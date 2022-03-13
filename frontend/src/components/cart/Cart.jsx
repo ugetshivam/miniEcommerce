@@ -1,48 +1,58 @@
-import React, { useContext } from 'react'
-import CartContext from '../contexts/CartContext';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Cart.module.css';
-
+import { incrementQtyHandler, decrementQtyHandler, calculatePrice, deleteHandler, emptyCart } from '../../redux/cartSlice';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Cart = () => {
 
-    const cartCtx = useContext(CartContext);
-    const cart = cartCtx.cart
+    const [toggleMessage, setToggleMessage] = useState(false);
+    const [toggleError, setToggleError] = useState(false);
+    const { cart, totalPrice, cartLength } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
 
-    let totalCartPrice = 0;
+    useEffect(() => {
+        dispatch(calculatePrice());
+    }, [cart])
 
-    if (cart.length === 1) {
-        totalCartPrice = cart[0].price * cart[0].qty;
-    }
-    else if (cart.length > 1) {
-        totalCartPrice = 0;
-        for (var i = 0; i < cart.length; i += 1) {
-            totalCartPrice += cart[i].price * cart[i].qty;
+    const placeOrderHandler = (e) => {
+        e.preventDefault();
+        dispatch(emptyCart());
+        if (cartLength !== 0) {
+            setToggleMessage(true);
+            setToggleError(false);
+        } else {
+            setToggleMessage(false);
+            setToggleError(true);
         }
-    }
 
-    const placeOrderHandler = () => {
-        console.log('clicked');
-        cartCtx.placeOrder();
     }
 
 
     return (
-        <ul className={styles.cart}>
-            <li>My Cart</li>
-            {
-                cart.map((item, idx) => {
-
-                    return <li key={idx}>
-                        <p className={styles['item-name']}>{item.name} <span className={styles['item-qty']}>x {item.qty}</span></p>
-                        <p className={styles['item-desc']}>{item.desc}</p>
-                        <p className={styles['item-price']}>$ {item.price}</p>
-                        <button onClick={() => cartCtx.decrementItem(item.id)}>-</button>
-                        <button onClick={() => cartCtx.incrementItem(item.id)}>+</button>
-                    </li>
-                })
-            }
-            <li className='flex'><span>Total:{totalCartPrice}</span> <button onClick={placeOrderHandler} className='btn'>Place Order</button></li>
-        </ul>
+        <div className={`${styles.container} container`}>
+            {toggleMessage && <h1 className={styles.placed}>Your order has been placed. Thank you for shopping with us.</h1>}
+            {toggleError && <h1 className={styles.error}>Cart is empty!</h1>}
+            <br />
+            <h1 className={styles.title}>My Cart</h1>
+            <ul className={styles.cart}>
+                {
+                    cart.map((item, idx) => (
+                        (item.qty > 0) &&
+                        <li key={idx}>
+                            <p className={styles['item-name']}>{item.name} <span className={styles['item-qty']}>x {item.qty}</span></p>
+                            <p className={styles['item-desc']}>{item.desc}</p>
+                            <p className={styles['item-price']}>$ {item.price}</p>
+                            <button onClick={() => dispatch(decrementQtyHandler(item.id))}>-</button>
+                            <button onClick={() => dispatch(incrementQtyHandler(item.id))}>+</button>
+                            <button onClick={() => dispatch(deleteHandler(item.id))}>Delete</button>
+                        </li>
+                    ))
+                }
+                <li className='flex'><span>Total: <sup style={{ fontSize: "12px" }}>$</sup>{totalPrice}</span> <button onClick={placeOrderHandler} className='btn'>Place Order</button></li>
+            </ul>
+        </div>
     )
 }
 

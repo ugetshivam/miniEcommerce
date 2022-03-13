@@ -20,7 +20,6 @@ function App() {
   const updateProduct = (value) => {
     setUProducts(value);
   }
-  console.table(uproducts);
   return (
     <div className="App">
       <Navbar />
