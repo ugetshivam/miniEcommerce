@@ -1,25 +1,14 @@
 import cardStyles from "./Product.module.css"
-import CartContext from "../../../contexts/CartContext";
-import { useRef, useContext } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 const Product = (props) => {
     const navigate = useNavigate();
     const { updateProduct } = props.payload;
     // console.log(props);
 
-    const cartCtx = useContext(CartContext);
-
     const inputQtyRef = useRef();
 
     const addToCart = () => {
-
-        cartCtx.addItemHandler({
-            id: props.id,
-            name: props.name,
-            desc: props.desc,
-            price: props.price,
-            qty: inputQtyRef.current.value
-        })
 
     }
 
